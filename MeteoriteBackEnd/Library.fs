@@ -12,11 +12,11 @@ module DataAccess =
     
     let getRequest () = 
         task {
-            let! res = client.GetAsync("https://data.nasa.gov/resource/gh4g-9sfh.json")
+            let! res = client.GetAsync("https://data.nasa.gov/resource/gh4g-9sfh.json?$limit=50")
             let! data = res.Content.ReadFromJsonAsync<APIModel[]>()
             (*match res.IsSuccessStatusCode with 
             | true -> return Ok data
             | false -> return Error data*)
-            printfn "%A" data
-            return data 
+            let correctData = Seq.ofArray data
+            return correctData
         }

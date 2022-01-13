@@ -15,12 +15,21 @@ namespace MeteoriteFrontEnd.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var data = DataAccess.getRequest();
-            data.RunSynchronously();
-            List<APIModel> models = data.Result.toList();
-            return View();
+            await data.ConfigureAwait(continueOnCapturedContext: false);
+            List<APIModel> models = data.Result.ToList();
+            return View(models);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchTerm)
+        {
+            var data = DataAccess.getRequest();
+            await data.ConfigureAwait(continueOnCapturedContext: false);
+            List<APIModel> models = data.Result.ToList();
+            return View(models);
         }
 
         public IActionResult Privacy()

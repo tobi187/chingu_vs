@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<MeteroiteBackEnd.MeteoriteApiModel.APIModel>
+@{
     ViewData["Title"] = "Meteorite Page";
 }
 
@@ -29,7 +30,20 @@
         </tr>
     </thead>
     <tbody>
-        
+        @foreach (MeteroiteBackEnd.MeteoriteApiModel.APIModel item in Model)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.id</td>
+                <td>@item.nametype</td>
+                <td>@item.recclass</td>
+                <td>@item.mass</td>
+                <td>@item.fall</td>
+                <td>@item.year</td>
+                <td>@item.geoLocation.latitude</td>
+                <td>@item.geoLocation.longitude</td>
+            </tr>
+        }
     </tbody>
 </table>
 
