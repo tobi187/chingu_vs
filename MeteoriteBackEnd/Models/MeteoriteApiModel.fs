@@ -21,3 +21,18 @@ type APIModel= {
     geoLocation: GeoLocation
 }
 
+
+[<CLIMutable>]
+type WebModel= {
+    name: string
+    id: string
+    nametype: string
+    recclass: string
+    mass: string
+    fall: string
+    year: string
+    reclat: string
+    reclong: string
+    geoLat: string
+    geoLang: string
+}

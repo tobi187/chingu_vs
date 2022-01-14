@@ -1,6 +1,7 @@
 ﻿using MeteoriteFrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System;
 using DataAction;
 using MeteroiteBackEnd.MeteoriteApiModel;
 
@@ -19,16 +20,15 @@ namespace MeteoriteFrontEnd.Controllers
         {
             var data = DataAccess.getRequest();
             await data.ConfigureAwait(continueOnCapturedContext: false);
-            List<APIModel> models = data.Result.ToList();
+            List<WebModel> models = data.Result.ToList();
             return View(models);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string searchTerm)
+        public IActionResult Index(string searchTerm)
         {
-            var data = DataAccess.getRequest();
-            await data.ConfigureAwait(continueOnCapturedContext: false);
-            List<APIModel> models = data.Result.ToList();
+            var data = DataAccess.searchUser(searchTerm ?? "");
+            List<WebModel> models = data.ToList();
             return View(models);
         }
 
