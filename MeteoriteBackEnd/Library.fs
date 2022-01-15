@@ -9,6 +9,12 @@ open MeteroiteBackEnd.MeteoriteApiModel
 
 module DataAccess =
     let client = new HttpClient()
+
+    let checkNull (x:APIModel) =
+        if not <| Object.ReferenceEquals(x.geoLocation, null)
+            then x
+            else 
+                {name=x.name; id=x.id; nametype=x.nametype; recclass=x.recclass; mass=x.mass; fall=x.fall; year=x.year; reclat=x.reclat; reclong=x.reclong; geoLocation={latitude="";longitude=""}}
     
     let getRequest () = 
         task {
@@ -17,11 +23,17 @@ module DataAccess =
             (*match res.IsSuccessStatusCode with 
             | true -> return Ok data
             | false -> return Error data*)
-            let correctData = 
-                Seq.ofArray data 
-                |> Seq.sortBy (fun x -> x.name)
-                //|> Seq.map (fun x -> if x.geoLocation)
-            return correctData
+            match res.IsSuccessStatusCode with
+            | true ->
+                let correctData = 
+                    Seq.ofArray data 
+                    |> Seq.sortBy (fun x -> x.name)
+                    |> Seq.map checkNull
+
+                return correctData
+            | false -> 
+                let err: seq<APIModel> = Seq.empty 
+                return err
         }
 
     let searchUser (userName:string) = 

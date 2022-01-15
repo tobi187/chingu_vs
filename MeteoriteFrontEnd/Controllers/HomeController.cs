@@ -20,7 +20,11 @@ namespace MeteoriteFrontEnd.Controllers
         {
             var data = DataAccess.getRequest();
             await data.ConfigureAwait(continueOnCapturedContext: false);
-            List<WebModel> models = data.Result.ToList();
+            List<APIModel> models = data.Result.ToList();
+            if (!models.Any())
+            {
+                return View("Error");
+            }
             return View(models);
         }
 
@@ -28,7 +32,11 @@ namespace MeteoriteFrontEnd.Controllers
         public IActionResult Index(string searchTerm)
         {
             var data = DataAccess.searchUser(searchTerm ?? "");
-            List<WebModel> models = data.ToList();
+            List<APIModel> models = data.ToList();
+            if (!models.Any())
+            {
+                return View("Error");
+            }
             return View(models);
         }
 

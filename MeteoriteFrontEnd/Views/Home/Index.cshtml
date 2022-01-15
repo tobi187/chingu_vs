@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MeteroiteBackEnd.MeteoriteApiModel.WebModel>
+﻿@model IEnumerable<MeteroiteBackEnd.MeteoriteApiModel.APIModel>
 @{
     ViewData["Title"] = "Meteorite Page";
 }
@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (MeteroiteBackEnd.MeteoriteApiModel.WebModel item in Model)
+        @foreach (MeteroiteBackEnd.MeteoriteApiModel.APIModel item in Model)
         {
             <tr>
                 <td>@item.name</td>
@@ -45,21 +45,17 @@
                 <td>@item.mass</td>
                 <td>@item.fall</td>
                 <td>@item.year</td>
-                <td>@item.geoLat</td>
-                <td>@item.geoLang</td>
-                @*if (@item.geoLocation == null || @item.geoLocation == new GeoLocation() { latitude = null, longitude = null }) {
-                    <td>NaN</td>
-                    <td>NaN</td>
-                } else {
-                    <td>@item.geoLocation.latitude</td>
-                    <td>@item.geoLocation.longitude</td>
-                }*@
+                <td>@item.geoLocation.latitude</td>
+                <td>@item.geoLocation.longitude</td>              
             </tr>
         }
     </tbody>
 </table>
 </div>
 
+
+@section scripts
+{
 <script>
     $('#searchVal').on('click', function() {
         $('#tableSection').empty().html(
@@ -71,3 +67,4 @@
         )
     })
 </script>
+}
